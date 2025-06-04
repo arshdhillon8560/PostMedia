@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-zinc-900 text-white min-h-screen relative">
+
+  <div class="absolute top-4 right-4 z-10">
+    <a href="/logout" class="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-md shadow">
+      Logout
+    </a>
+  </div>
+
+  <div class="flex items-center justify-center min-h-screen px-4 py-10">
+    <div class="bg-zinc-800 p-6 sm:p-8 rounded-2xl shadow-2xl w-full max-w-lg text-center animate-fade-in space-y-8">
+
+
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-transparent bg-clip-text mb-2">
+          Hello, <%= user.name %>
+        </h2>
+        <p class="text-zinc-400 text-sm sm:text-base">You can create a new post below</p>
+      </div>
+
+      <form action="/post" method="POST" class="space-y-4 text-left">
+        <label for="content" class="block text-zinc-300 text-sm font-medium">New Post</label>
+        <textarea 
+          id="content"
+          name="content"
+          rows="4"
+          placeholder="What's on your mind?"
+          class="w-full p-3 bg-zinc-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 resize-none"
+          required
+        ></textarea>
+
+        <input 
+          type="submit" 
+          value="Create New Post"
+          class="w-full bg-pink-600 hover:bg-pink-700 transition-colors text-white font-semibold py-2 rounded-md shadow"
+        >
+      </form>
+
+    
+      <div class="text-left space-y-4">
+        <h3 class="text-lg sm:text-xl font-semibold text-white border-b border-zinc-600 pb-2">Your Posts</h3>
+
+        <div class="space-y-4">
+          <% user.posts.reverse().forEach(post => { %>
+            <div class="bg-zinc-700 rounded-xl p-4 shadow hover:shadow-lg transition">
+              <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
+                <h4 class="text-base sm:text-lg font-semibold text-pink-400">@<%= user.username %></h4>
+              </div>
+              <p class="text-zinc-300 mb-4 break-words"><%= post.content %></p>
+              <div class="flex flex-wrap gap-4 text-sm font-medium">
+                <small><%= post.likes.length %> likes</small>
+                <a href="/like/<%= post._id %>" class="text-blue-400 hover:text-blue-500">
+                  <%= post.likes.indexOf(user._id) === -1 ? "Like" : "UnLike" %>
+                </a>
+                <a href="/edit/<%= post._id %>" class="text-green-400 hover:text-green-500">Edit</a>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  
+  <style>
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fade-in 0.8s ease-out;
+    }
+  </style>
+
+</body>
+</html>

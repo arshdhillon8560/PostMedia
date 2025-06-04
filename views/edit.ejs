@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edit Post</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-zinc-900 text-white min-h-screen flex items-center justify-center px-4">
+
+  <div class="bg-zinc-800 p-8 rounded-2xl shadow-2xl max-w-xl w-full space-y-6 animate-fade-in">
+
+    <!-- Heading -->
+    <h1 class="text-3xl font-bold bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 text-transparent bg-clip-text text-center">
+      Edit Your Post
+    </h1>
+
+    <!-- Form -->
+    <form action="/edit/<%= post._id %>" method="POST" class="space-y-4">
+      <label for="content" class="block text-zinc-300 text-sm font-medium">Post Content</label>
+      <textarea 
+        id="content"
+        name="content"
+        rows="6"
+        class="w-full p-4 bg-zinc-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+        required
+      ><%= post.content %></textarea>
+
+      <div class="flex items-center justify-between">
+        <a href="/profile" class="text-sm text-zinc-400 hover:underline">Cancel</a>
+        <button 
+          type="submit"
+          class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-6 rounded-md shadow transition-all"
+        >
+          Update Post
+        </button>
+      </div>
+    </form>
+
+  </div>
+
+  <!-- Fade-in animation -->
+  <style>
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fade-in 0.8s ease-out;
+    }
+  </style>
+
+</body>
+</html>
